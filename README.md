@@ -1,4 +1,4 @@
-# ComputeWorker
+# ComputeCompanion
  A Godot plug-in that wraps the RenderingDevice compute API. Provides a custom ComputeWorker class and node that simplifies setup and execution of the compute pipeline, and handles encoding of Godot data types into GLSL data buffers.
  
  ## The ComputeWorker Node

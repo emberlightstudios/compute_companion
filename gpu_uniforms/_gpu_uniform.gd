@@ -30,7 +30,12 @@ func initialize(_rd: RenderingDevice) -> RDUniform:
 	# Create RDUniform object using the provided binding id and data
 	return _create_rd_uniform()
 	
-func _create_rd_uniform(): pass
+func _create_rd_uniform(): 
+	var rd_uniform := RDUniform.new()
+	rd_uniform.binding = binding
+	rd_uniform.add_id(data_rid)
+	return rd_uniform
+	
 func _create_rid(): pass
 
 func serialize_data():

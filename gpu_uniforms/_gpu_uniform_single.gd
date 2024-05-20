@@ -17,7 +17,7 @@ func _init(data, _binding: int, storage_buffer: bool = true, _alias: String = ''
 	uniform_type = UNIFORM_TYPES.STORAGE_BUFFER if storage_buffer else UNIFORM_TYPES.UNIFORM_BUFFER
 
 func _create_rd_uniform() -> RDUniform:
-	rd_uniform = RDUniform.new()
+	rd_uniform = super()
 	match uniform_type:
 		UNIFORM_TYPES.UNIFORM_BUFFER:
 			rd_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_UNIFORM_BUFFER

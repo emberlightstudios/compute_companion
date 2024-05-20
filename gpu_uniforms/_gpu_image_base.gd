@@ -37,9 +37,8 @@ func _get_rd_texture_format() -> RDTextureFormat:
 	return texture_format
 
 func _create_rd_uniform() -> RDUniform:
+	rd_uniform = super()
 	rd_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_IMAGE
-	rd_uniform.binding = binding
-	rd_uniform.add_id(data_rid)
 	return rd_uniform
 
 func get_uniform_data():

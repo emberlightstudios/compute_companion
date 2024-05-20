@@ -1,70 +1,23 @@
 # GLSL data type encoding: `double`, `float`
 
-extends GPUUniform
+extends GPUUniformSingle
 class_name GPU_Float
 
-enum UNIFORM_TYPES{
-	UNIFORM_BUFFER,
-	STORAGE_BUFFER
-}
-
-## The initial data supplied to the uniform
+const glsl_type = 'float'
 @export var data: float = 0.0
-## The shader binding for this uniform
-@export var binding: int = 0
-## Type of uniform to create. `UNIFORM_BUFFER`s cannot be altered from within the shader
-@export var uniform_type: UNIFORM_TYPES = UNIFORM_TYPES.UNIFORM_BUFFER
-
-var data_rid: RID = RID()
-var uniform: RDUniform = RDUniform.new()
 
 
-func initialize(rd: RenderingDevice) -> RDUniform:
-	
-	# Create the buffer using our initial data
-	data_rid = create_rid(rd)
-	
-	# Create RDUniform object using the provided binding id and data
-	return create_uniform()
-
-
-func create_uniform() -> RDUniform:
-	
-	match uniform_type:
-		UNIFORM_TYPES.UNIFORM_BUFFER:
-			uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_UNIFORM_BUFFER
-		UNIFORM_TYPES.STORAGE_BUFFER:
-			uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER
-			
-	uniform.binding = binding
-	uniform.add_id(data_rid)
-	
+static func _create(data: float, alias: String = '') -> GPU_Float:
+	var uniform := GPU_Float.new(alias)
+	uniform.data = data
 	return uniform
 
+func serialize_data() -> PackedByteArray:
+	return PackedFloat32Array([data]).to_byte_array()
 
-func create_rid(rd: RenderingDevice) -> RID:
-	
-	var bytes = float_to_byte_array(data)
-	
-	var buffer: RID = RID()
-	
-	match uniform_type:
-		UNIFORM_TYPES.UNIFORM_BUFFER:
-			buffer = rd.uniform_buffer_create(bytes.size(), bytes)
-		UNIFORM_TYPES.STORAGE_BUFFER:
-			buffer = rd.storage_buffer_create(bytes.size(), bytes)
-	
-	return buffer
+func deserialize_data(array: PackedByteArray) -> float:
+	return array.decode_float(0)
 
-
-func get_uniform_data(rd: RenderingDevice) -> float:
-	var out := rd.buffer_get_data(data_rid)
-	return byte_array_to_float(out)
-
-
-func set_uniform_data(rd: RenderingDevice, num: float) -> void:
-	var sb_data = float_to_byte_array(num)
-	rd.buffer_update(data_rid, 0 , sb_data.size(), sb_data)
 
 
 

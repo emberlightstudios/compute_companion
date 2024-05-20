@@ -14,13 +14,13 @@ func serialize_data() -> PackedByteArray:
 		vec.x = vector.x
 		vec.y = vector.y
 		vec.z = vector.z
-		var float_arr = PackedFloat32Array([vector.x, vector.y, vector.z]).to_byte_array()
+		var float_arr = PackedFloat32Array([vector.x, vector.y, vector.z, 0.]).to_byte_array()
 		bytes.append_array(float_arr)
 	return bytes
 
 func deserialize_data(array: PackedByteArray) -> PackedVector3Array:
 	var arr: PackedVector3Array = PackedVector3Array()
-	for v in range(array.size() / 16.0):
+	for v in range(array.size() / 16):
 		var vec = Vector3()
 		vec.x = array.decode_float(0 + (v * 16))
 		vec.y = array.decode_float(4 + (v * 16))

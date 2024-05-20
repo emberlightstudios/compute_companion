@@ -1,4 +1,4 @@
-@icon("res://addons/compute_worker/compute_worker_icon.png")
+@icon("res://addons/compute_companion/compute_worker_icon.png")
 
 extends Node
 class_name ComputeWorker

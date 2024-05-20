@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bks4tj4wktdx7"
-path="res://.godot/imported/compute_worker_icon.png-d4caf552b037531d7ae1239ac0a9376c.ctex"
+path="res://.godot/imported/compute_worker_icon.png-a1329e289488f28ea2fc2360e8f51c6b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/compute_worker/compute_worker_icon.png"
-dest_files=["res://.godot/imported/compute_worker_icon.png-d4caf552b037531d7ae1239ac0a9376c.ctex"]
+source_file="res://addons/compute_companion/compute_worker_icon.png"
+dest_files=["res://.godot/imported/compute_worker_icon.png-a1329e289488f28ea2fc2360e8f51c6b.ctex"]
 
 [params]
 

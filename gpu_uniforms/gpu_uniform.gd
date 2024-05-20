@@ -1,4 +1,4 @@
-@icon("res://addons/compute_worker/gpu_uniforms/gpu_uniform_icon.png")
+@icon("res://addons/compute_companion/gpu_uniforms/gpu_uniform_icon.png")
 
 extends Resource
 class_name GPUUniform

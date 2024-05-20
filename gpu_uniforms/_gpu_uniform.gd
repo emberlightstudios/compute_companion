@@ -17,8 +17,10 @@ var rd_uniform: RDUniform = RDUniform.new()
 var rd: RenderingDevice = null
 
 
-func _init(_alias: String = '') -> void:
+func _init(data, _binding: int, _alias: String = '') -> void:
+	set(&'data', data)
 	alias = _alias
+	binding = _binding
 
 ## Set up uniform buffer and register with RenderingDevice. Returns the resulting RDUniform.
 func initialize(_rd: RenderingDevice) -> RDUniform:
@@ -32,8 +34,7 @@ func _create_rd_uniform(): pass
 func _create_rid(): pass
 
 func serialize_data():
-	return PackedByteArray()
-	
+	pass	
 func deserialize_data(bytes: PackedByteArray): 
 	pass
 

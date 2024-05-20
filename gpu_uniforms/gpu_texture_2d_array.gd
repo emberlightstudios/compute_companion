@@ -7,12 +7,6 @@ const glsl_type = 'image2DArray'
 @export var data: Array[Image] = [Image.create(1, 1, false, Image.FORMAT_RGBAF)]
 
 
-static func create_uniform(data: Array[Image], binding: int, alias: String = '') -> GPU_Texture2DArray:
-	var uniform := GPU_Texture2DArray.new(alias)
-	uniform.data = data
-	uniform.binding = binding
-	return uniform
-
 func get_width():
 	return data[0].get_width()
 

@@ -7,11 +7,6 @@ const glsl_type: String = 'bool'
 @export var data: bool
 
 
-static func _create(data: bool, alias: String = '') -> GPU_Boolean:
-	var uniform = GPU_Boolean.new(alias)
-	uniform.data = data
-	return uniform
-
 func serialize_data() -> PackedByteArray:
 	var arr = PackedByteArray([0, 0, 0, 0])
 	arr.encode_s32(0, 1 if data else 0)

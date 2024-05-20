@@ -6,7 +6,7 @@ class_name GPU_StructArray
 ## The size of the Struct array defined in the shader.
 @export var array_size: int = 1
 
-
+'''
 func initialize(rd: RenderingDevice) -> RDUniform:
 	
 	var arr: PackedByteArray = PackedByteArray()
@@ -77,3 +77,4 @@ func set_uniform_data(rd: RenderingDevice, data: Array[Array]) -> void:
 		i_bytes.append_array(by)
 	
 	rd.buffer_update(data_rid, 0 , i_bytes.size(), i_bytes)
+'''

@@ -7,11 +7,6 @@ const glsl_type = 'double[]'
 @export var data: PackedFloat64Array = PackedFloat64Array()
 
 
-static func _convert(data: PackedFloat64Array, alias: String = '') -> GPU_PackedFloat64Array:
-	var uniform = GPU_PackedFloat64Array.new(alias)
-	uniform.data = data
-	return uniform
-
 func serialize_data() -> PackedByteArray:
 	return data.to_byte_array()
 

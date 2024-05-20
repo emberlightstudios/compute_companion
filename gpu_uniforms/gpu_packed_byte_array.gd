@@ -7,11 +7,6 @@ const glsl_type = 'uint[]'
 @export var data: PackedByteArray = PackedByteArray()
 
 
-static func _create(data: PackedByteArray, alias: String = '') -> GPU_PackedByteArray:
-	var uniform := GPU_PackedByteArray.new(alias)
-	uniform.data = data
-	return uniform
-
 func serialize_data() -> PackedByteArray:
 	return data
 

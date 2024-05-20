@@ -11,16 +11,13 @@ enum UNIFORM_TYPES{
 ## The structure of the Struct defined inside the shader.
 ## Add data types to the array that correspond to the data types defined in the shader, in the same order.
 @export var struct_data: Array = []
-@export var binding: int = 0 
 @export var uniform_type: UNIFORM_TYPES = UNIFORM_TYPES.STORAGE_BUFFER
 
 var uniform: RDUniform = RDUniform.new()
-var data_rid: RID = RID()
-
 var bytes: PackedByteArray = PackedByteArray()
 var byte_length: int = 0
 
-
+'''
 func initialize(rd: RenderingDevice) -> RDUniform:
 	
 	bytes = encode_struct(struct_data, true)
@@ -56,14 +53,12 @@ func create_rid(rd: RenderingDevice) -> RID:
 	return buffer
 
 
-func get_uniform_data(rd: RenderingDevice):
+func get_uniform_data():
 	var out := rd.buffer_get_data(data_rid)
 	return decode_struct(out)
 	
 	
-
-
-func set_uniform_data(rd: RenderingDevice, data: Array) -> void:
+func set_uniform_data(data: Array) -> void:
 	var sb_data = encode_struct(data)
 	rd.buffer_update(data_rid, 0 , sb_data.size(), sb_data)
 
@@ -71,7 +66,6 @@ func set_uniform_data(rd: RenderingDevice, data: Array) -> void:
 ## Encode the contents of the passed in `data` Array to PackedByteArray. 
 ## Contents of `data` must match the order and data types defined in `struct_data`.
 func encode_struct(data: Array, init: bool = false) -> PackedByteArray:
-	
 	var arr: PackedByteArray = PackedByteArray()
 	var data_index = 0
 	
@@ -140,3 +134,4 @@ func decode_struct(data: PackedByteArray) -> Array:
 				offset += 4
 				
 	return arr
+'''

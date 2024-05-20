@@ -9,26 +9,15 @@ enum UNIFORM_TYPES{
 }
 
 ## Type of uniform to create. `UNIFORM_BUFFER`s cannot be altered from within the shader
-@export var uniform_type: UNIFORM_TYPES = UNIFORM_TYPES.UNIFORM_BUFFER
+@export var uniform_type: UNIFORM_TYPES = UNIFORM_TYPES.STORAGE_BUFFER
 
 
-static func create_uniform_buffer(data, binding: int, alias: String = '') -> GPUUniformSingle:
-	var uniform: GPUUniformSingle = _create(data, alias)
-	uniform.uniform_type = UNIFORM_TYPES.UNIFORM_BUFFER
-	uniform.binding = binding
-	return uniform
-	
-static func create_storage_buffer(data, binding: int, alias: String = '') -> GPUUniformSingle:
-	var uniform: GPUUniformSingle = _create(data, alias)
-	uniform.uniform_type = UNIFORM_TYPES.STORAGE_BUFFER
-	uniform.binding = binding
-	return uniform
-	
-static func _create(data, alias) -> GPUUniform:
-	return GPUUniform.new()
+func _init(data, _binding: int, storage_buffer: bool = true, _alias: String = ''):
+	super(data, _binding, _alias)
+	uniform_type = UNIFORM_TYPES.STORAGE_BUFFER if storage_buffer else UNIFORM_TYPES.UNIFORM_BUFFER
 
 func _create_rd_uniform() -> RDUniform:
-	rd_uniform = super()
+	rd_uniform = RDUniform.new()
 	match uniform_type:
 		UNIFORM_TYPES.UNIFORM_BUFFER:
 			rd_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_UNIFORM_BUFFER
@@ -37,7 +26,7 @@ func _create_rd_uniform() -> RDUniform:
 	return rd_uniform
 	
 func _create_rid() -> RID:
-	var buffer: RID = super()
+	var buffer: RID = RID()
 	var bytes = serialize_data()
 	match uniform_type:
 		UNIFORM_TYPES.UNIFORM_BUFFER:

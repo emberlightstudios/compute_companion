@@ -7,11 +7,6 @@ const glsl_type = 'vec4'
 @export var data: Vector4 = Vector4()
 
 
-static func _create(data: Vector4, alias: String = '') -> GPU_Vector4:
-	var uniform = GPU_Vector4.new(alias)
-	uniform.data = data
-	return uniform
-
 func serialize_data() -> PackedByteArray:
 	return PackedFloat32Array([data.x, data.y, data.z, data.w]).to_byte_array()
 

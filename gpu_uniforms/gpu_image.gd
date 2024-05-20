@@ -6,12 +6,6 @@ const glsl_type = 'image2D'
 @export var data: Image = Image.create(1, 1, false, Image.FORMAT_RGBAF)
 
 
-static func create_uniform(data: Image, binding: int, alias: String = '') -> GPU_Image:
-	var uniform := GPU_Image.new(alias)
-	uniform.binding = binding
-	uniform.data = data
-	return uniform
-
 func get_width() -> int:
 	return data.get_width()
 

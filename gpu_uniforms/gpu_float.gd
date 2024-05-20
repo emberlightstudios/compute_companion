@@ -7,11 +7,6 @@ const glsl_type = 'float'
 @export var data: float = 0.0
 
 
-static func _create(data: float, alias: String = '') -> GPU_Float:
-	var uniform := GPU_Float.new(alias)
-	uniform.data = data
-	return uniform
-
 func serialize_data() -> PackedByteArray:
 	return PackedFloat32Array([data]).to_byte_array()
 

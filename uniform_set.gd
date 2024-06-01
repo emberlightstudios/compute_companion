@@ -1,4 +1,4 @@
-@icon("res://addons/compute_companion/uniform_sets/uniform_set_icon.png")
+@icon("res://addons/compute_companion/uniform_set_icon.png")
 
 extends Resource
 class_name UniformSet

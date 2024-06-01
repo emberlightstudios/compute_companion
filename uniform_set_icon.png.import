@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dlhonrqe46tlw"
-path="res://.godot/imported/uniform_set_icon.png-1bf26b0ba28f116a1d583474913fe1a0.ctex"
+path="res://.godot/imported/uniform_set_icon.png-979b3ff5434e4f64e2f00b9b0f331d24.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/compute_companion/uniform_sets/uniform_set_icon.png"
-dest_files=["res://.godot/imported/uniform_set_icon.png-1bf26b0ba28f116a1d583474913fe1a0.ctex"]
+source_file="res://addons/compute_companion/uniform_set_icon.png"
+dest_files=["res://.godot/imported/uniform_set_icon.png-979b3ff5434e4f64e2f00b9b0f331d24.ctex"]
 
 [params]
 

@@ -24,13 +24,11 @@ signal compute_end
 
 
 ## Factory for creating from code
-static func create(shader: String) -> ComputeWorker:
-	var compute = ComputeWorker.new()
-	compute.shader_file = shader
+func _init(shader: String) -> void:
+	shader_file = shader
 	# Can't set on compute object directly or it complains about the type
 	var uset: Array[UniformSet] = [UniformSet.new(0)]
-	compute.uniform_sets = uset
-	return compute
+	uniform_sets = uset
 
 ## Call this to initialize and dispatch the compute list. 
 ## Initial uniform data can be set by getting the uniform using `get_uniform_by_binding()` or `get_uniform_by_alias()`,

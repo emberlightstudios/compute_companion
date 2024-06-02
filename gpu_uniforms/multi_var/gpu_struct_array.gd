@@ -1,11 +1,11 @@
 # GLSL data type encoding: `struct[]`
 
-class_name GPUUniformStructArray
+class_name GPU_StructArray
 extends GPUUniformSingle
 
 
 ## The size of the Struct array defined in the shader.
-@export var data: Array[GPUUniformStruct]
+@export var data: Array[GPU_Struct]
 
 var struct_buffer_sizes = []
 

@@ -3,7 +3,7 @@
 ## If using an array of indeterminate length in a storage buffer,
 ## it MUST be the last element in the list
 
-class_name GPUUniformMulti
+class_name GPU_Multi
 extends GPUUniformSingle
 
 ## The structure of the buffer defined inside the shader.

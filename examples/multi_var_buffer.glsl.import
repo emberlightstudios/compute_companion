@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://dmafxhfcil064"
+path="res://.godot/imported/multi_var_buffer.glsl-dd65cc79aac4f6cf65b1fcfd4c4e786e.res"
+
+[deps]
+
+source_file="res://addons/compute_companion/examples/multi_var_buffer.glsl"
+dest_files=["res://.godot/imported/multi_var_buffer.glsl-dd65cc79aac4f6cf65b1fcfd4c4e786e.res"]
+
+[params]
+

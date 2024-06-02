@@ -10,7 +10,7 @@ const glsl_type = 'vec3'
 func serialize_data() -> PackedByteArray:
 	return PackedFloat32Array([data.x, data.y, data.z]).to_byte_array()
 
-func deserialize_data(array: PackedByteArray) -> PackedVector3Array:
+func deserialize_data(array: PackedByteArray) -> Vector3:
 	var dup = array.duplicate()
 	dup.to_float32_array()
 	var vec = Vector3()

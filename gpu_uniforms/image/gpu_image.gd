@@ -1,6 +1,6 @@
 # GLSL data type encoding: `image2D`
 extends GPUImageBase
-class_name GPUImage
+class_name GPU_Image
 
 const glsl_type = 'image2D'
 @export var data: Image = Image.create(1, 1, false, Image.FORMAT_RGBAF)

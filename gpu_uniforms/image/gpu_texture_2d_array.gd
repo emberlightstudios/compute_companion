@@ -1,7 +1,7 @@
 # GLSL data type encoding: `image2DArray`
 
 extends GPUImageBase
-class_name GPUTexture2DArray
+class_name GPU_Texture2DArray
 
 const glsl_type = 'image2DArray'
 @export var data: Array[Image] = [Image.create(1, 1, false, Image.FORMAT_RGBAF)]

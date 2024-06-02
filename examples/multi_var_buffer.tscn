@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbsifd3mypbx"]
+
+[sub_resource type="GDScript" id="GDScript_0bicf"]
+script/source = "@tool
+extends Node
+
+@export var run: bool:
+	set(value):
+		if value:
+			run_compute_shader()
+
+const shader := \"res://addons/compute_companion/examples/multi_var_buffer.glsl\"
+
+func run_compute_shader() -> void:
+
+	var compute := ComputeWorker.new(shader)
+	var a_bool := GPU_Boolean.new(true, 'a_bool')
+	var an_int := GPU_Int.new(5, 'an_int')
+	var a_float := GPU_Float.new(3.14159, 'a_float')
+	var a_vector := GPU_Vector3.new(Vector3(1, 2, 3), 'a_vector')
+	
+	var float_array := GPU_PackedFloat64Array.new([1,2,3,4,5,6,7], 'float_array')
+	## Since this will go in a storage buffer we don't have to specify the length
+	## of this array in the shader, but in this case it must go last in the list
+	## Then we just grab the bytestream at the end during deserialization.
+	## There may also be trailing zeros since the array must be aligned to 16 bytes.
+	## If using a uniform buffer you must specify the length in the shader file.
+	
+	
+	var buffer := GPU_Multi.new([
+		a_bool, an_int, a_float, a_vector, float_array
+	] as Array[GPUUniformSingle], 'multi_var', 0)
+
+	compute.uniform_sets[0].uniforms = [buffer] as Array[GPUUniform]
+	compute.initialize(1, 1, 1)
+	if not compute.initialized:
+		return
+	compute.execute()
+	
+	print(compute.get_uniform_data_by_alias('multi_var'))
+"
+
+[node name="Node" type="Node"]
+script = SubResource("GDScript_0bicf")

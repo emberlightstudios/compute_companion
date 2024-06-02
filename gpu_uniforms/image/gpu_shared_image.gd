@@ -1,6 +1,6 @@
 # GLSL data type encoding: `image2D`
 
-class_name GPUSharedImage
+class_name GPU_SharedImage
 extends GPUImageBase
 
 @export var data: Texture2D

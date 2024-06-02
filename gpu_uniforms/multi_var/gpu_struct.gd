@@ -3,7 +3,7 @@
 ## it MUST be the last element in the list
 
 extends GPUUniformSingle
-class_name GPUUniformStruct
+class_name GPU_Struct
 
 
 ## The structure of the Struct defined inside the shader.

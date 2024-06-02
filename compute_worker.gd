@@ -4,7 +4,7 @@ extends Node
 class_name ComputeWorker
 
 
-## The GLSL shader file to execute
+## The GLSL shader file 
 @export_file var shader_file: String = ''
 ## The uniform sets to bind to the compute pipeline. Must be UniformSet resources.
 @export var uniform_sets: Array[UniformSet] = []
@@ -83,7 +83,7 @@ func get_uniform_data_by_alias(alias: String, set_id: int = 0) -> Variant:
 ## `initialize()` must be called before setting uniform data with this function.
 ## To set uniform data before `initialized()` is called,
 ## get the GPU_* uniform object with `get_uniform_by_*()` and set the data directly.
-func set_uniform_data(data: Variant, binding: int, set_id: int = 0, dispatch: bool = true) -> void:
+func set_uniform_data(data: Variant, binding: int, set_id: int = 0, dispatch: bool = false) -> void:
 	if !initialized:
 		printerr("ComputeWorker must be initialized before accessing uniform data")
 		return
@@ -95,7 +95,7 @@ func set_uniform_data(data: Variant, binding: int, set_id: int = 0, dispatch: bo
 		execute()
 
 ## Same as `set_uniform_data`, except it searches by the uniform's `alias`
-func set_uniform_data_by_alias(data: Variant, alias: String, set_id: int = 0, dispatch: bool = true) -> void:
+func set_uniform_data_by_alias(data: Variant, alias: String, set_id: int = 0, dispatch: bool = false) -> void:
 	if !initialized:
 		printerr("ComputeWorker must be initialized before accessing uniform data")
 		return

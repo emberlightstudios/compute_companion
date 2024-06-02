@@ -91,7 +91,7 @@ func set_uniform_data(data: Variant, binding: int, set_id: int = 0, dispatch: bo
 	# Must dispatch new compute list with updated uniforms to take effect
 	if dispatch:
 		dispatch_compute_list()
-		execute_compute_shader()
+		execute()
 
 ## Same as `set_uniform_data`, except it searches by the uniform's `alias`
 func set_uniform_data_by_alias(data: Variant, alias: String, set_id: int = 0, dispatch: bool = true) -> void:
@@ -103,11 +103,11 @@ func set_uniform_data_by_alias(data: Variant, alias: String, set_id: int = 0, di
 	# Must dispatch new compute list with updated uniforms to take effect
 	if dispatch:
 		dispatch_compute_list()
-		execute_compute_shader()
+		execute()
 
 ## Submit current compute list and wait for sync to update uniform values
-func execute_compute_shader() -> void:
-	if use_global_device:
+func execute() -> void:
+	if use_global_device or rd == null:
 		return
 	compute_begin.emit()
 	rd.submit()
@@ -192,6 +192,19 @@ func generate_stub() -> void:
 				qual = 'rgba32f'
 				fl.store_line('layout(set = {s}, binding = {b}, {q}) restrict uniform {t} {a};'.format(
 					{'s': uniform_set.set_id, 'b': uniform.binding, 'q': qual, 't': uniform.glsl_type ,'a': uniform.alias}))
+			elif uniform is GPUUniformMulti:
+				if uniform.uniform_type == GPUUniformSingle.UNIFORM_TYPES.STORAGE_BUFFER:
+					qual = 'std430'
+					buffer_type = 'buffer'
+				elif uniform.uniform_type == GPUUniformSingle.UNIFORM_TYPES.UNIFORM_BUFFER:
+					qual = 'std140'
+					buffer_type = 'readonly uniform'
+				fl.store_line('layout(set = {s}, binding = {b}, {q}) restrict {t} {a} {'.format(
+					{'s': uniform_set.set_id, 'b': uniform.binding, 'q': qual, 't': buffer_type, 'a': uniform.alias + '_buffer'}
+				))
+				for u in uniform.data:
+					fl.store_line('\t{t} {a};'.format({'t': u.glsl_type, 'a': u.alias }))
+				fl.store_line('};')
 			elif uniform is GPUUniformSingle:
 				if uniform.uniform_type == GPUUniformSingle.UNIFORM_TYPES.STORAGE_BUFFER:
 					qual = 'std430'
@@ -204,7 +217,7 @@ func generate_stub() -> void:
 				))
 				fl.store_line('\t{t} {a};'.format({'t': uniform.glsl_type, 'a': uniform.alias }))
 				fl.store_line('};')
-		
+
 	fl.store_line('')
 	fl.store_line('void main() {')
 	fl.store_line('')

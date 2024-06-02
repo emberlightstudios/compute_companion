@@ -5,7 +5,7 @@ class_name ComputeWorker
 
 
 ## The GLSL shader file to execute
-@export var shader_file: String = ''
+@export_file var shader_file: String = ''
 ## The uniform sets to bind to the compute pipeline. Must be UniformSet resources.
 @export var uniform_sets: Array[UniformSet] = []
 ## The size of the global work group to dispatch.
@@ -189,7 +189,7 @@ func generate_stub(version := '450', layout := Vector3i.ONE) -> void:
 				var data_format = uniform.get_glsl_data_format()
 				fl.store_line('layout(set = {s}, binding = {b}, {d}) restrict uniform {t} {a};'.format(
 					{'s': uniform_set.set_id, 'b': uniform.binding, 'd': data_format, 't': uniform.glsl_type ,'a': uniform.alias}))
-			elif uniform is GPUUniformMulti:
+			elif uniform is GPU_Multi:
 				if uniform.uniform_type == GPUUniformSingle.UNIFORM_TYPES.STORAGE_BUFFER:
 					qual = 'std430'
 					buffer_type = 'buffer'
@@ -202,7 +202,7 @@ func generate_stub(version := '450', layout := Vector3i.ONE) -> void:
 				for u in uniform.data:
 					fl.store_line('\t{t} {a};'.format({'t': u.glsl_type, 'a': u.alias }))
 				fl.store_line('};')
-			elif uniform is GPUUniformStruct or uniform is GPUUniformStructArray:
+			elif uniform is GPU_Struct or uniform is GPU_StructArray:
 				if uniform.uniform_type == GPUUniformSingle.UNIFORM_TYPES.STORAGE_BUFFER:
 					qual = 'std430'
 					buffer_type = 'buffer'
@@ -215,9 +215,9 @@ func generate_stub(version := '450', layout := Vector3i.ONE) -> void:
 				fl.store_line('};\n\nlayout(set = {s}, binding = {b}, {q}) restrict {t} {a} {'.format(
 					{'s': uniform_set.set_id, 'b': uniform.binding, 'q': qual, 't': buffer_type, 'a': uniform.alias + '_buffer'}
 				))
-				if uniform is GPUUniformStruct:
+				if uniform is GPU_Struct:
 					fl.store_line('\t{a}Struct {a};\n};'.format({'a': uniform.alias }))
-				elif uniform is GPUUniformStructArray:
+				elif uniform is GPU_StructArray:
 					fl.store_line('\t{a}Struct {a}[];\n};'.format({'a': uniform.alias }))
 			elif uniform is GPUUniformSingle:
 				if uniform.uniform_type == GPUUniformSingle.UNIFORM_TYPES.STORAGE_BUFFER:

@@ -11,7 +11,7 @@ layout(set = 0, binding = 1, rgba32f) restrict writeonly uniform image2D outputI
 void main() {
 	ivec2 id = ivec2(gl_GlobalInvocationID.xy);
 	vec4 color = imageLoad(inputImage, id);
-	color.rgb = vec3(1.) - color.rgb;
+	color.rgb = 1. - color.rgb;
 	imageStore(outputImage, id, color);
 }
 

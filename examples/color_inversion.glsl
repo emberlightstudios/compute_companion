@@ -3,8 +3,8 @@
 
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 
-layout(set = 0, binding = 0, rgba32f) restrict uniform image2D inputImage;
-layout(set = 0, binding = 1, rgba32f) restrict uniform image2D outputImage;
+layout(set = 0, binding = 0, rgba32f) restrict readonly uniform image2D inputImage;
+layout(set = 0, binding = 1, rgba32f) restrict writeonly uniform image2D outputImage;
 
 
 // Simple color inversion shader

@@ -201,7 +201,7 @@ func generate_stub(version := '450', layout := Vector3i.ONE) -> void:
 				for u in uniform.data:
 					fl.store_line('\t{t} {a};'.format({'t': u.glsl_type, 'a': u.alias }))
 				fl.store_line('};')
-			elif uniform is GPUUniformStruct:
+			elif uniform is GPUUniformStruct or uniform is GPUUniformStructArray:
 				if uniform.uniform_type == GPUUniformSingle.UNIFORM_TYPES.STORAGE_BUFFER:
 					qual = 'std430'
 					buffer_type = 'buffer'
@@ -214,7 +214,10 @@ func generate_stub(version := '450', layout := Vector3i.ONE) -> void:
 				fl.store_line('};\n\nlayout(set = {s}, binding = {b}, {q}) restrict {t} {a} {'.format(
 					{'s': uniform_set.set_id, 'b': uniform.binding, 'q': qual, 't': buffer_type, 'a': uniform.alias + '_buffer'}
 				))
-				fl.store_line('\t{a}Struct {a};\n};'.format({'a': uniform.alias }))
+				if uniform is GPUUniformStruct:
+					fl.store_line('\t{a}Struct {a};\n};'.format({'a': uniform.alias }))
+				elif uniform is GPUUniformStructArray:
+					fl.store_line('\t{a}Struct {a}[];\n};'.format({'a': uniform.alias }))
 			elif uniform is GPUUniformSingle:
 				if uniform.uniform_type == GPUUniformSingle.UNIFORM_TYPES.STORAGE_BUFFER:
 					qual = 'std430'

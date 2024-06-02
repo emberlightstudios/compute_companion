@@ -3,9 +3,8 @@
 ## If using an array of indeterminate length in a storage buffer,
 ## it MUST be the last element in the list
 
-extends GPUUniformSingle
 class_name GPUUniformMulti
-
+extends GPUUniformSingle
 
 ## The structure of the buffer defined inside the shader.
 ## Add data types to the array that correspond to the data types defined in the shader, in the same order.

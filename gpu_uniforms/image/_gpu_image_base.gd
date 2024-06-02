@@ -5,6 +5,7 @@ class_name GPUImageBase
 ## RenderingDevice DATA_FORMAT enum values only
 @export var rd_format: int = RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT
 
+var view := RDTextureView.new()
 # Map of RenderingDevice formats to compatible image format
 var image_formats = {
 	RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT: Image.FORMAT_RGBAF,
@@ -25,7 +26,7 @@ func get_glsl_data_format() -> String:
 func _create_rid() -> RID:
 	var texture_format = _get_rd_texture_format()
 	var image_data = serialize_data()
-	var tex = rd.texture_create(texture_format, RDTextureView.new(), image_data)
+	var tex = rd.texture_create(texture_format, view, image_data)
 	return tex
 
 func _get_rd_texture_format() -> RDTextureFormat:

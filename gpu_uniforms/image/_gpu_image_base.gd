@@ -24,7 +24,7 @@ func get_glsl_data_format() -> String:
 func _create_rid() -> RID:
 	var texture_format = _get_rd_texture_format()
 	var image_data = serialize_data()
-	var tex = rd.texture_create(texture_format, view, image_data)
+	var tex = rd.texture_create(texture_format, view, [image_data])
 	return tex
 
 func _get_rd_texture_format() -> RDTextureFormat:

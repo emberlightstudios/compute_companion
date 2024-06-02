@@ -10,9 +10,10 @@ enum UNIFORM_TYPES{
 
 ## Type of uniform to create. `UNIFORM_BUFFER`s cannot be altered from within the shader
 @export var uniform_type: UNIFORM_TYPES = UNIFORM_TYPES.STORAGE_BUFFER
+## for storing the size of the packed byte array of serialized data
+var bytes_size : int
 
-
-func _init(data, _binding: int, storage_buffer: bool = true, _alias: String = ''):
+func _init(data, _alias: String = '' , _binding: int = -1, storage_buffer: bool = true):
 	super(data, _binding, _alias)
 	uniform_type = UNIFORM_TYPES.STORAGE_BUFFER if storage_buffer else UNIFORM_TYPES.UNIFORM_BUFFER
 
@@ -27,7 +28,8 @@ func _create_rd_uniform() -> RDUniform:
 	
 func _create_rid() -> RID:
 	var buffer: RID = RID()
-	var bytes = serialize_data()
+	var bytes: PackedByteArray = serialize_data()
+	bytes_size = bytes.size()
 	match uniform_type:
 		UNIFORM_TYPES.UNIFORM_BUFFER:
 			while bytes.size() % 16 != 0:

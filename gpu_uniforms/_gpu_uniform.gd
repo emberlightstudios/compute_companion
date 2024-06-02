@@ -50,3 +50,10 @@ func set_uniform_data(value) -> void:
 
 func get_uniform_data():
 	return deserialize_data(rd.buffer_get_data(data_rid))
+
+## Per the alignment spec for SPIR-V structs, struct alignments must be rounded to a multiple of 16.
+func pad_byte_array(arr: PackedByteArray):
+	var copy = arr.duplicate()
+	while copy.size() % 16 != 0:
+		copy.append(0)
+	return copy

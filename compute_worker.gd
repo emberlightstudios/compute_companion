@@ -24,8 +24,9 @@ signal compute_end
 
 
 ## Factory for creating from code
-func _init(shader: String) -> void:
+func _init(shader: String, _use_global_device := false) -> void:
 	shader_file = shader
+	use_global_device = _use_global_device
 	# Can't set on compute object directly or it complains about the type
 	var uset: Array[UniformSet] = [UniformSet.new(0)]
 	uniform_sets = uset

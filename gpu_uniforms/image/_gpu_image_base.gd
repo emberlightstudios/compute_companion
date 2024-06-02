@@ -1,22 +1,20 @@
 # GLSL data type encoding: `image2D`
-extends GPUUniform
 class_name GPUImageBase
+extends GPUUniform
 
 ## RenderingDevice DATA_FORMAT enum values only
 @export var rd_format: int = RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT
 
+var texture_type = RenderingDevice.TEXTURE_TYPE_2D
 var view := RDTextureView.new()
 # Map of RenderingDevice formats to compatible image format
 var image_formats = {
 	RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT: Image.FORMAT_RGBAF,
 }
-var texture_type = RenderingDevice.TEXTURE_TYPE_2D
 
-func get_width() -> int:
-	return 1
 
-func get_height() -> int:
-	return 1
+func get_width() -> int: return 1
+func get_height() -> int: return 1
 
 func get_glsl_data_format() -> String:
 	if rd_format == RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT:

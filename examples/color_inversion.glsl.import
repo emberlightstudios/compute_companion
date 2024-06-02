@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://74ao67eyafjq"
+path="res://.godot/imported/color_inversion.glsl-949abe7f816c0bd328941fa8548e79b8.res"
+
+[deps]
+
+source_file="res://addons/compute_companion/examples/color_inversion.glsl"
+dest_files=["res://.godot/imported/color_inversion.glsl-949abe7f816c0bd328941fa8548e79b8.res"]
+
+[params]
+

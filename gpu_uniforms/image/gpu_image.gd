@@ -12,13 +12,13 @@ func get_width() -> int:
 func get_height() -> int:
 	return data.get_height()
 
-func initialize(rd: RenderingDevice) -> RDUniform:
+func initialize(compute: ComputeWorker) -> RDUniform:
 	if data.has_mipmaps():
 		data.clear_mipmaps()
 	var img_format = image_formats[rd_format]
 	if data.get_format() != img_format:
 		data.convert(img_format)
-	return super(rd)
+	return super(compute)
 
 func serialize_data() -> PackedByteArray:
 	return data.get_data()

@@ -14,6 +14,7 @@ class_name ComputeWorker
 @export var use_global_device: bool = false
 
 var rd: RenderingDevice = null
+var view := RDTextureView.new()
 var compute_pipeline: RID = RID()
 var shader_rid: RID = RID()
 
@@ -48,7 +49,7 @@ func initialize(x: int = work_group_size.x, y: int = work_group_size.y, z: int =
 	shader_rid = rd.shader_create_from_spirv(shader_spirv)
 	# Generate uniform set from provided `GPU_*.tres` uniforms
 	for i in range(uniform_sets.size()):
-		uniform_sets[i].initialize(rd, shader_rid)
+		uniform_sets[i].initialize(self, shader_rid)
 	# Create the RenderingDevice compute pipeline
 	compute_pipeline = _create_compute_pipeline(shader_rid)
 	# Bind uniform set and pipeline to compute list and dispatch

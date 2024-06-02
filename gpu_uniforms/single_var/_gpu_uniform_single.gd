@@ -34,7 +34,7 @@ func _create_rid() -> RID:
 		UNIFORM_TYPES.UNIFORM_BUFFER:
 			while bytes.size() % 16 != 0:
 				bytes.append(0)
-			buffer = rd.uniform_buffer_create(bytes.size(), bytes)
+			buffer = compute.rd.uniform_buffer_create(bytes.size(), bytes)
 		UNIFORM_TYPES.STORAGE_BUFFER:
-			buffer = rd.storage_buffer_create(bytes.size(), bytes)
+			buffer = compute.rd.storage_buffer_create(bytes.size(), bytes)
 	return buffer

@@ -19,14 +19,14 @@ func _get_rd_texture_format() -> RDTextureFormat:
 	format.array_layers = data.size()
 	return format
 
-func initialize(rd: RenderingDevice) -> RDUniform:
+func initialize(compute: ComputeWorker) -> RDUniform:
 	for image in data:
 		if image.has_mipmaps():
 			image.clear_mipmaps()
 		var img_format = image_formats[rd_format]
 		if image.get_format() != img_format:
 			image.convert(img_format)
-	return super(rd)
+	return super(compute)
 	
 func serialize_data() -> Array:
 	var bytes = []
@@ -37,7 +37,7 @@ func serialize_data() -> Array:
 func deserialize_data(value: PackedByteArray) -> Array[Image]:
 	var images: Array[Image] = []
 	for layer in range(data.size()):
-		var t_data = rd.texture_get_data(data_rid, layer)
+		var t_data = compute.rd.texture_get_data(data_rid, layer)
 		var image = Image.create_from_data(get_width(), get_height(), false, image_formats[rd_format], t_data)
 		images.append(image)
 	return images

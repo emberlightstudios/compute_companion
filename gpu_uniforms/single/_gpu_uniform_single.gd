@@ -13,8 +13,8 @@ enum UNIFORM_TYPES{
 ## for storing the size of the packed byte array of serialized data
 var bytes_size : int
 
-func _init(data, _alias: String = '' , _binding: int = -1, storage_buffer: bool = true):
-	super(data, _binding, _alias)
+func _init(_data, _alias: String = '' , _binding: int = -1, storage_buffer: bool = true):
+	super(_data, _alias, _binding)
 	uniform_type = UNIFORM_TYPES.STORAGE_BUFFER if storage_buffer else UNIFORM_TYPES.UNIFORM_BUFFER
 
 func _create_rd_uniform() -> RDUniform:

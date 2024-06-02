@@ -25,7 +25,7 @@ func get_glsl_data_format() -> String:
 func _create_rid() -> RID:
 	var texture_format = _get_rd_texture_format()
 	var image_data = serialize_data()
-	var tex = compute.rd.texture_create(texture_format, compute.view, image_data)
+	var tex = rd.texture_create(texture_format, RDTextureView.new(), image_data)
 	return tex
 
 func _get_rd_texture_format() -> RDTextureFormat:
@@ -46,10 +46,10 @@ func _create_rd_uniform() -> RDUniform:
 	return rd_uniform
 
 func get_uniform_data():
-	var t_data = compute.rd.texture_get_data(data_rid, 0)
+	var t_data = rd.texture_get_data(data_rid, 0)
 	return deserialize_data(t_data)
 
 func set_uniform_data(image):
 	set(&'data', image)
 	var image_data = serialize_data()
-	compute.rd.texture_update(data_rid, 0, image_data)
+	rd.texture_update(data_rid, 0, image_data)

@@ -14,7 +14,7 @@ class_name GPUUniform
 
 var data_rid: RID = RID()
 var rd_uniform: RDUniform = RDUniform.new()
-var compute: ComputeWorker = null
+var rd: RenderingDevice = null
 
 
 func _init(data, _alias: String = '', _binding: int = -1) -> void:
@@ -23,8 +23,8 @@ func _init(data, _alias: String = '', _binding: int = -1) -> void:
 	binding = _binding
 
 ## Set up uniform buffer and register with RenderingDevice. Returns the resulting RDUniform.
-func initialize(_compute: ComputeWorker) -> RDUniform:
-	compute = _compute
+func initialize(_rd: RenderingDevice) -> RDUniform:
+	rd = _rd
 	# Create the buffer using our initial data
 	data_rid = _create_rid()
 	# Create RDUniform object using the provided binding id and data
@@ -43,10 +43,10 @@ func deserialize_data(bytes: PackedByteArray): pass
 func set_uniform_data(value) -> void:
 	set(&'data', value)
 	var sb_data = serialize_data()
-	compute.rd.buffer_update(data_rid, 0, sb_data.size(), sb_data)
+	rd.buffer_update(data_rid, 0, sb_data.size(), sb_data)
 
 func get_uniform_data():
-	return deserialize_data(compute.rd.buffer_get_data(data_rid))
+	return deserialize_data(rd.buffer_get_data(data_rid))
 
 ## Per the alignment spec for SPIR-V structs, struct alignments must be rounded to a multiple of 16.
 func pad_byte_array(arr: PackedByteArray):

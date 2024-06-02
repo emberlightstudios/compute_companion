@@ -13,12 +13,12 @@ var uniform_set_rid: RID = RID()
 func _init(_id = 0) -> void:
 	set_id = _id
 
-func initialize(compute: ComputeWorker, shader: RID) -> void:
+func initialize(rd: RenderingDevice, shader: RID) -> void:
 	var uniform_set = []
 	for i in range(uniforms.size()):
-		var uniform = uniforms[i].initialize(compute)
+		var uniform = uniforms[i].initialize(rd)
 		uniform_set.push_back(uniform)
-	uniform_set_rid = compute.rd.uniform_set_create(uniform_set, shader, set_id)
+	uniform_set_rid = rd.uniform_set_create(uniform_set, shader, set_id)
 
 func destroy(rd: RenderingDevice) -> void:
 	# Must free the uniform set before the uniforms themselves, else the uniform_set RID will become invalid.

@@ -22,8 +22,8 @@ func run_compute_shader() -> void:
 	var float_array := GPU_PackedFloat64Array.new([1,2,3,4,5,6,7], 'float_array')
 	## Since this will go in a storage buffer we don't have to specify the length
 	## of this array in the shader, but in this case it must go last in the list
-	## Then we just grab the bytestream at the end during deserialization.
-	## There may also be trailing zeros since the array must be aligned to 16 bytes.
+	## Then we just grab the rest of the bytestream at the end during deserialization.
+	## There may also be extra trailing zeros since the array must be aligned to 16 bytes.
 	## If using a uniform buffer you must specify the length in the shader file.
 	
 	

@@ -41,7 +41,6 @@ func deserialize_data(array: PackedByteArray) -> Array:
 	var offset: int = 0
 	var result: Array = []
 	for i in len(data):
-		print('offset ' + str(offset))
 		var new_data = data[i].deserialize_data(array.slice(offset))
 		offset += var_buffer_sizes[i]
 		result.append(new_data)

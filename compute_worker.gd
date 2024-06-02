@@ -174,17 +174,13 @@ func destroy() -> void:
 func _exit_tree():
 	destroy()
 
-func generate_stub() -> void:
-	var version = '450'
-	var layout: Vector3i = Vector3i.ONE
+func generate_stub(version := '450', layout := Vector3i.ONE) -> void:
 	var fl = FileAccess.open(shader_file, FileAccess.WRITE)
-	fl.store_line('#[compute]')
-	fl.store_line('#version ' + version)
-	fl.store_line('')
-	
+	fl.store_line('#[compute]\n#version ' + version + '\n')
 	fl.store_line('layout(local_size_x = {x}, local_size_y = {y}, local_size_z = {z}) in;'.format(
 		{'x': layout.x, 'y': layout.y, 'z': layout.z}))
 	for uniform_set in uniform_sets:
+		fl.store_line('')
 		for uniform: GPUUniform in uniform_set.uniforms:
 			var qual: String = ''
 			var buffer_type: String = ''
@@ -205,6 +201,20 @@ func generate_stub() -> void:
 				for u in uniform.data:
 					fl.store_line('\t{t} {a};'.format({'t': u.glsl_type, 'a': u.alias }))
 				fl.store_line('};')
+			elif uniform is GPUUniformStruct:
+				if uniform.uniform_type == GPUUniformSingle.UNIFORM_TYPES.STORAGE_BUFFER:
+					qual = 'std430'
+					buffer_type = 'buffer'
+				elif uniform.uniform_type == GPUUniformSingle.UNIFORM_TYPES.UNIFORM_BUFFER:
+					qual = 'std140'
+					buffer_type = 'readonly uniform'
+				fl.store_line('struct {a}Struct {'.format({'s': uniform.alias}))
+				for u in uniform.data:
+					fl.store_line('\t{t} {a};'.format({'t': u.glsl_type, 'a': u.alias }))
+				fl.store_line('};\n\nlayout(set = {s}, binding = {b}, {q}) restrict {t} {a} {'.format(
+					{'s': uniform_set.set_id, 'b': uniform.binding, 'q': qual, 't': buffer_type, 'a': uniform.alias + '_buffer'}
+				))
+				fl.store_line('\t{a}Struct {a};\n};'.format({'a': uniform.alias }))
 			elif uniform is GPUUniformSingle:
 				if uniform.uniform_type == GPUUniformSingle.UNIFORM_TYPES.STORAGE_BUFFER:
 					qual = 'std430'
@@ -215,12 +225,7 @@ func generate_stub() -> void:
 				fl.store_line('layout(set = {s}, binding = {b}, {q}) restrict {t} {a} {'.format(
 					{'s': uniform_set.set_id, 'b': uniform.binding, 'q': qual, 't': buffer_type, 'a': uniform.alias + '_buffer'}
 				))
-				fl.store_line('\t{t} {a};'.format({'t': uniform.glsl_type, 'a': uniform.alias }))
-				fl.store_line('};')
+				fl.store_line('\t{t} {a};\n};'.format({'t': uniform.glsl_type, 'a': uniform.alias }))
 
-	fl.store_line('')
-	fl.store_line('void main() {')
-	fl.store_line('')
-	fl.store_line('}')
-	fl.store_line('')
+	fl.store_line('\nvoid main() {\n\n}\n')
 	fl.close()

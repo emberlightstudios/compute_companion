@@ -7,9 +7,10 @@ extends GPUUniformSingle
 class_name GPUUniformMulti
 
 
-## The structure of the Struct defined inside the shader.
+## The structure of the buffer defined inside the shader.
 ## Add data types to the array that correspond to the data types defined in the shader, in the same order.
 @export var data: Array[GPUUniformSingle] = []
+
 var var_buffer_sizes: Array = []
 
 
@@ -27,8 +28,8 @@ func serialize_data() -> PackedByteArray:
 			data[i] is GPU_Vector3i or \
 			data[i] is GPU_Color:
 				while len(arr) % 16 != 0:
+					arr.append(0)
 					var_buffer_sizes[i-1] += 1
-					arr.append_array(PackedByteArray([0]))
 		arr.append_array(bytes)
 		var_buffer_sizes[i] = len(bytes) 
 	if data_rid.is_valid():

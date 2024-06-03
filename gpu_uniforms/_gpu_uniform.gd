@@ -40,11 +40,6 @@ func _create_rid(): pass
 func serialize_data(): pass
 func deserialize_data(bytes: PackedByteArray): pass
 
-func set_uniform_data(value) -> void:
-	set(&'data', value)
-	var sb_data = serialize_data()
-	rd.buffer_update(data_rid, 0, sb_data.size(), sb_data)
-
 func get_uniform_data():
 	return deserialize_data(rd.buffer_get_data(data_rid))
 

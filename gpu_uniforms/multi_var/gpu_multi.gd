@@ -18,7 +18,11 @@ func serialize_data() -> PackedByteArray:
 	var_buffer_sizes.resize(len(data))
 	for i in len(data):
 		var bytes = data[i].serialize_data()
-		if  data[i] is GPU_PackedByteArray or \
+		var_buffer_sizes[i] = len(bytes)
+		## Vector types must be 16 byte aligned
+		## Adjust previous alignment if prior varibales dont
+		## align to 16 bytes
+		if data[i] is GPU_PackedByteArray or \
 			data[i] is GPU_PackedFloat64Array or \
 			data[i] is GPU_PackedVector3Array or \
 			data[i] is GPU_Vector2 or \
@@ -30,7 +34,7 @@ func serialize_data() -> PackedByteArray:
 					arr.append(0)
 					var_buffer_sizes[i-1] += 1
 		arr.append_array(bytes)
-		var_buffer_sizes[i] = len(bytes) 
+
 	if data_rid.is_valid():
 		if rd_uniform.uniform_type == RenderingDevice.UNIFORM_TYPE_UNIFORM_BUFFER:
 			if pad_byte_array(arr).size() != bytes_size:

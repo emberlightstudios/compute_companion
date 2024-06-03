@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=3 uid="uid://c572j2wsddck0"]
+
+[sub_resource type="GDScript" id="GDScript_0bicf"]
+script/source = "@tool
+extends Node
+
+@export var run: bool:
+	set(value):
+		if value:
+			run_compute_shader()
+
+const shader := \"res://addons/compute_companion/examples/uniform_buffer.glsl\"
+
+func run_compute_shader() -> void:
+
+	var compute := ComputeWorker.new(shader)
+	
+	var ubuffer := GPU_Vector3.new(Vector3(10, 20, 30), 'ubuffer', 0)
+	## These are always readonly
+	ubuffer.uniform_type = GPUUniformSingle.UNIFORM_TYPES.UNIFORM_BUFFER
+	
+	var sbuffer := GPU_Vector3.new(Vector3(2, 3, 4), 'sbuffer', 1)
+	## Unnecessary because it is the default
+	sbuffer.uniform_type = GPUUniformSingle.UNIFORM_TYPES.STORAGE_BUFFER
+
+	compute.uniform_sets[0].uniforms = [ubuffer, sbuffer] as Array[GPUUniform]
+
+	compute.initialize(1, 1, 1)
+	if not compute.initialized:
+		return
+	print(compute.get_uniform_data_by_alias('sbuffer'))
+	#compute.execute()
+	print(compute.get_uniform_data_by_alias('sbuffer'))
+"
+
+[node name="Node" type="Node"]
+script = SubResource("GDScript_0bicf")

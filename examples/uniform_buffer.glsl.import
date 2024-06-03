@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://ck38tiy7050a1"
+path="res://.godot/imported/uniform_buffer.glsl-fd189a3133ace27f213bf7ad4c01e07e.res"
+
+[deps]
+
+source_file="res://addons/compute_companion/examples/uniform_buffer.glsl"
+dest_files=["res://.godot/imported/uniform_buffer.glsl-fd189a3133ace27f213bf7ad4c01e07e.res"]
+
+[params]
+

@@ -23,7 +23,6 @@ signal compute_begin
 signal compute_end
 
 
-## Factory for creating from code
 func _init(shader: String, _use_global_device := false) -> void:
 	shader_file = shader
 	use_global_device = _use_global_device
@@ -175,14 +174,18 @@ func destroy() -> void:
 func _exit_tree():
 	destroy()
 
+func _notification(what):
+	if what == NOTIFICATION_PREDELETE:
+		destroy()
+
 func generate_stub(version := '450', layout := Vector3i.ONE) -> void:
 	var fl = FileAccess.open(shader_file, FileAccess.WRITE)
 	fl.store_line('#[compute]\n#version ' + version + '\n')
 	fl.store_line('layout(local_size_x = {x}, local_size_y = {y}, local_size_z = {z}) in;'.format(
 		{'x': layout.x, 'y': layout.y, 'z': layout.z}))
 	for uniform_set in uniform_sets:
-		fl.store_line('')
 		for uniform: GPUUniform in uniform_set.uniforms:
+			fl.store_line('')
 			var qual: String = ''
 			var buffer_type: String = ''
 			if uniform is GPUImageBase:

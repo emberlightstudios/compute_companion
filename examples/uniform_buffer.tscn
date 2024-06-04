@@ -14,12 +14,19 @@ const shader := \"res://addons/compute_companion/examples/uniform_buffer.glsl\"
 func run_compute_shader() -> void:
 
 	var compute := ComputeWorker.new(shader)
-	
+
+	## Not sure why you would want to use a uniform buffer but you can.
+	## There are some caveats:
+	## They are always readonly
+	## You must specify the size of any array inside the shader
+	## I cannot get the byte alignment correct in a multi-var buffer with
+	##   an array at the end, so you will likely run into problems if you try.
 	var ubuffer := GPU_Vector3.new(Vector3(10, 20, 30), 'ubuffer', 0)
-	## These are always readonly
+	
 	ubuffer.uniform_type = GPUUniformSingle.UNIFORM_TYPES.UNIFORM_BUFFER
 	
 	var sbuffer := GPU_Vector3.new(Vector3(2, 3, 4), 'sbuffer', 1)
+	
 	## Unnecessary because it is the default
 	sbuffer.uniform_type = GPUUniformSingle.UNIFORM_TYPES.STORAGE_BUFFER
 

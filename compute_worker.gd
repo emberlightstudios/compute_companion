@@ -61,7 +61,7 @@ func get_uniform_data(binding: int, set_id: int = 0) -> Variant:
 	if !initialized:
 		printerr("ComputeWorker must be initialized before accessing uniform data")
 		return
-	var uniform = get_uniform_by_binding(binding, set_id)
+	var uniform: GPUUniform = get_uniform_by_binding(binding, set_id)
 	if !uniform:
 		printerr("Uniform at binding `" + str(binding) + "` not found in set " + str(set_id) + ".")
 		return
@@ -72,7 +72,7 @@ func get_uniform_data_by_alias(alias: String, set_id: int = 0) -> Variant:
 	if !initialized:
 		printerr("ComputeWorker must be initialized before accessing uniform data")
 		return
-	var uniform = get_uniform_by_alias(alias, set_id)
+	var uniform: GPUUniform = get_uniform_by_alias(alias, set_id)
 	if !uniform:
 		printerr("Uniform `" + alias + "` not found in set " + str(set_id) + ".")
 		return
@@ -86,7 +86,7 @@ func set_uniform_data(data: Variant, binding: int, set_id: int = 0, dispatch: bo
 	if !initialized:
 		printerr("ComputeWorker must be initialized before accessing uniform data")
 		return
-	var uniform = get_uniform_by_binding(binding, set_id)
+	var uniform: GPUUniform = get_uniform_by_binding(binding, set_id)
 	uniform.set_uniform_data(data)
 	# Must dispatch new compute list with updated uniforms to take effect
 	if dispatch:
@@ -98,7 +98,7 @@ func set_uniform_data_by_alias(data: Variant, alias: String, set_id: int = 0, di
 	if !initialized:
 		printerr("ComputeWorker must be initialized before accessing uniform data")
 		return
-	var uniform = get_uniform_by_alias(alias, set_id)
+	var uniform: GPUUniform = get_uniform_by_alias(alias, set_id)
 	uniform.set_uniform_data(data)
 	# Must dispatch new compute list with updated uniforms to take effect
 	if dispatch:

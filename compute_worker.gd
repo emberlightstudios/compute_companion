@@ -201,7 +201,7 @@ func generate_stub(version := '450', layout := Vector3i.ONE) -> void:
 					buffer_type = 'readonly uniform'
 					
 				if uniform is GPU_Multi:
-					fl.store_line('layout(set = {s}, binding = {b}, {q}) restrict {t} {a} {'.format(
+					fl.store_line('layout(set = {s}, binding = {b}, {q}) restrict {t} {a}\n{'.format(
 						{'s': uniform_set.set_id, 'b': uniform.binding, 'q': qual, 't': buffer_type, 'a': uniform.alias + '_buffer'}
 					))
 					for u in uniform.data:
@@ -211,7 +211,7 @@ func generate_stub(version := '450', layout := Vector3i.ONE) -> void:
 					fl.store_line('struct {a}Struct {'.format({'s': uniform.alias}))
 					for u in uniform.data:
 						fl.store_line('\t{t} {a};'.format({'t': u.glsl_type, 'a': u.alias }))
-					fl.store_line('};\n\nlayout(set = {s}, binding = {b}, {q}) restrict {t} {a} {'.format(
+					fl.store_line('};\n\nlayout(set = {s}, binding = {b}, {q}) restrict {t} {a}\n{'.format(
 						{'s': uniform_set.set_id, 'b': uniform.binding, 'q': qual, 't': buffer_type, 'a': uniform.alias + '_buffer'}
 					))
 					if uniform is GPU_Struct:
@@ -219,10 +219,10 @@ func generate_stub(version := '450', layout := Vector3i.ONE) -> void:
 					elif uniform is GPU_StructArray:
 						fl.store_line('\t{a}Struct {a}[];\n};'.format({'a': uniform.alias }))
 				elif uniform is GPUUniformSingle:
-					fl.store_line('layout(set = {s}, binding = {b}, {q}) restrict {t} {a} {'.format(
+					fl.store_line('layout(set = {s}, binding = {b}, {q}) restrict {t} {a}\n{'.format(
 						{'s': uniform_set.set_id, 'b': uniform.binding, 'q': qual, 't': buffer_type, 'a': uniform.alias + '_buffer'}
 					))
 					fl.store_line('\t{t} {a};\n};'.format({'t': uniform.glsl_type, 'a': uniform.alias }))
 
-	fl.store_line('\nvoid main() {\n\n}\n')
+	fl.store_line('\nvoid main()\n{\n\n}\n')
 	fl.close()

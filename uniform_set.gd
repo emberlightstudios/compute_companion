@@ -26,5 +26,5 @@ func destroy(rd: RenderingDevice) -> void:
 	rd.free_rid(uniform_set_rid)
 	for uniform in uniforms:
 		rd.free_rid(uniform.data_rid)
-		uniform.uniform.clear_ids()
-	
+		uniform.rd_uniform.clear_ids()
+

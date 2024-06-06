@@ -190,8 +190,9 @@ func generate_stub(version := '450', layout := Vector3i.ONE) -> void:
 			var buffer_type: String = ''
 			if uniform is GPUImageBase:
 				var data_format = uniform.get_glsl_data_format()
-				fl.store_line('layout(set = {s}, binding = {b}, {d}) restrict uniform {t} {a};'.format(
-					{'s': uniform_set.set_id, 'b': uniform.binding, 'd': data_format, 't': uniform.glsl_type ,'a': uniform.alias}))
+				fl.store_line('layout(set = {s}, binding = {b}, {d}) restrict {acc}uniform {t} {a};'.format(
+					{'s': uniform_set.set_id, 'b': uniform.binding, 'd': data_format, 't': uniform.glsl_type, 'a': uniform.alias, 
+					'acc': 'readonly ' if uniform is GPU_ReadonlyImage else 'writeonly ' if uniform is GPU_WriteonlyImage else ''}))
 			else:
 				if uniform.uniform_type == GPUUniformSingle.UNIFORM_TYPES.STORAGE_BUFFER:
 					qual = 'std430'

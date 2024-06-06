@@ -20,6 +20,8 @@ func serialize_data() -> PackedByteArray:
 		if  data[i] is GPU_PackedByteArray or \
 			data[i] is GPU_PackedFloat64Array or \
 			data[i] is GPU_PackedVector3Array or \
+			data[i] is GPU_PackedVector2Array or \
+			data[i] is GPU_PackedVector3iArray or \
 			data[i] is GPU_Vector2 or \
 			data[i] is GPU_Vector3 or \
 			data[i] is GPU_Vector4 or \

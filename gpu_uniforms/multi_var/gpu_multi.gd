@@ -20,8 +20,7 @@ func serialize_data() -> PackedByteArray:
 		var bytes = data[i].serialize_data()
 		var_buffer_sizes[i] = len(bytes)
 		## Vector types must be 16 byte aligned
-		## Adjust previous alignment if prior varibales dont
-		## align to 16 bytes
+		## Adjust previous alignment if prior variables don't align to 16 bytes
 		if data[i] is GPU_PackedByteArray or \
 			data[i] is GPU_PackedFloat64Array or \
 			data[i] is GPU_PackedVector3Array or \

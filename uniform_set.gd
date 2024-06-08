@@ -23,8 +23,10 @@ func initialize(rd: RenderingDevice, shader: RID) -> void:
 func destroy(rd: RenderingDevice) -> void:
 	# Must free the uniform set before the uniforms themselves, else the uniform_set RID will become invalid.
 	# Not sure if it's because it is freed when it becomes invalid, but we clean it up anyway.
-	rd.free_rid(uniform_set_rid)
+	if uniform_set_rid.is_valid():
+		rd.free_rid(uniform_set_rid)
 	for uniform in uniforms:
-		rd.free_rid(uniform.data_rid)
-		uniform.rd_uniform.clear_ids()
+		if uniform.data_rid.is_valid():
+			rd.free_rid(uniform.data_rid)
+			uniform.rd_uniform.clear_ids()
 

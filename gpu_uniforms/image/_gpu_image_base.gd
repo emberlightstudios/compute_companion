@@ -7,19 +7,12 @@ extends GPUUniform
 
 var texture_type = RenderingDevice.TEXTURE_TYPE_2D
 var view := RDTextureView.new()
-# Map of RenderingDevice formats to compatible image format
-var image_formats = {
-	RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT: Image.FORMAT_RGBAF,
-}
 
 
 func get_width() -> int: return 1
 func get_height() -> int: return 1
 
-func get_glsl_data_format() -> String:
-	if rd_format == RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT:
-		return 'rgba32f'
-	return 'UNDEFINED_GLSL_DATA_TYPE'
+func get_glsl_data_format() -> String: return ''
 
 func _create_rid() -> RID:
 	var texture_format = _get_rd_texture_format()
